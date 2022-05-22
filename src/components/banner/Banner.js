@@ -2,20 +2,24 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
-import { fetcher } from "../../config";
+import { fetcher, tmdbAPI } from "../../config";
 import Button from "../button/Button";
+import "swiper/scss/autoplay";
+import { Autoplay } from "swiper";
 
 const Banner = () => {
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=25eac7bfded2875800a2dcebaa8ab051`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieList("upcoming"), fetcher);
 
   const movies = data?.results || [];
 
   return (
-    <section className="banner h-[500px] page-container mb-20 overflow-hidden">
-      <Swiper grabCursor="true" slidesPerView={"auto"}>
+    <section className="banner h-[550px] page-container mb-20 overflow-hidden select-none">
+      <Swiper
+        modules={[Autoplay]}
+        grabCursor="true"
+        slidesPerView={"auto"}
+        autoplay={{ delay: 5000 }}
+      >
         {movies.length > 0 &&
           movies.map((item) => (
             <SwiperSlide key={item.id}>
@@ -28,28 +32,31 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
-  const { title, poster_path, id } = item;
+  const { title, poster_path, id, vote_average, release_date } = item;
   const navigate = useNavigate();
   return (
     <div className="w-full h-full rounded-lg relative">
       <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"></div>
       <img
-        src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+        src={tmdbAPI.imageOriginal(poster_path)}
         alt=""
         className="w-full h-full object-cover rounded-lg"
       />
       <div className="absolute left-5 bottom-5 w-full text-white">
-        <h2 className="font-bold text-3xl mb-5">{title}</h2>
-        <div className="flex items-center gap-x-3 mb-8">
-          <span className="py-2 px-4 border border-white rounded-md">
-            Adventure
-          </span>
-          <span className="py-2 px-4 border border-white rounded-md">
-            Adventure
-          </span>
-          <span className="py-2 px-4 border border-white rounded-md">
-            Adventure
-          </span>
+        <h2 className="font-bold text-3xl">{title}</h2>
+        <div className="flex items-center gap-x-10 mb-3">
+          <span className="py-2">{new Date(release_date).getFullYear()}</span>
+          <div className="flex items-center">
+            <span className="py-2">{vote_average}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 pl-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          </div>
         </div>
         <Button onClick={() => navigate(`/movie/${id}`)} className="w-auto">
           Watch now

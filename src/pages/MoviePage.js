@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useSWR from "swr";
 import MovieCard from "../components/movie/MovieCard";
-import { apiKey, fetcher } from "../config";
+import { fetcher, tmdbAPI } from "../config";
 import useDebounce from "../hooks/useDebounce";
 
 const itemsPerPage = 20;
@@ -11,9 +11,7 @@ const MoviePage = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   const [filter, setFilter] = useState("");
-  const [url, setUrl] = useState(
-    `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${nextPage}`
-  );
+  const [url, setUrl] = useState(tmdbAPI.getMovieList("popular", nextPage));
   const filterDebounce = useDebounce(filter);
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -22,21 +20,16 @@ const MoviePage = () => {
   const loading = !data && !error;
   useEffect(() => {
     if (filterDebounce) {
-      setUrl(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${filterDebounce}&page=${nextPage}`
-      );
+      setUrl(tmdbAPI.getMovieSearch(filterDebounce, nextPage));
     } else {
-      setUrl(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${nextPage}`
-      );
+      setUrl(tmdbAPI.getMovieList("popular", nextPage));
     }
   }, [filterDebounce, nextPage]);
 
   const movies = data?.results || [];
-  // const { page, total_page } = data;
   useEffect(() => {
     if (!data || !data.total_results) return;
-    setPageCount(Math.ceil(data.total_results / itemsPerPage));
+    setPageCount(Math.ceil(data.total_results / (itemsPerPage * 500)));
   }, [data, itemOffset]);
 
   const handlePageClick = (event) => {
@@ -46,7 +39,7 @@ const MoviePage = () => {
   };
 
   return (
-    <div className="py-10 page-container">
+    <div className="page-container">
       <div className="flex mb-10">
         <div className="flex-1">
           <input
@@ -76,21 +69,21 @@ const MoviePage = () => {
       {loading && (
         <div className="w-10 h-10 rounded-full border-4 border-primary border-t-transparent border-t-4 mx-auto animate-spin"></div>
       )}
-      <div className="grid grid-cols-4 gap-10">
+      <div className="grid gap-10 movie-page mx-auto">
         {!loading &&
           movies.length > 0 &&
           movies.map((item) => (
             <MovieCard key={item.id} item={item}></MovieCard>
           ))}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 pb-10 w-full select-none">
         <ReactPaginate
           breakLabel="..."
-          nextLabel="next >"
+          nextLabel=">"
           onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
+          pageRangeDisplayed={3}
           pageCount={pageCount}
-          previousLabel="< previous"
+          previousLabel="<"
           renderOnZeroPageCount={null}
           className="pagination"
         />
