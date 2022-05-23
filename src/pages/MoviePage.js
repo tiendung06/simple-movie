@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useSWR from "swr";
 import MovieCard from "../components/movie/MovieCard";
@@ -13,6 +13,7 @@ const MoviePage = () => {
   const [filter, setFilter] = useState("");
   const [url, setUrl] = useState(tmdbAPI.getMovieList("popular", nextPage));
   const filterDebounce = useDebounce(filter);
+  const focusInput = useRef();
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
   };
@@ -32,6 +33,10 @@ const MoviePage = () => {
     setPageCount(Math.ceil(data.total_results / (itemsPerPage * 500)));
   }, [data, itemOffset]);
 
+  useEffect(() => {
+    if (focusInput.current) focusInput.current.focus();
+  }, []);
+
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % data.total_results;
     setItemOffset(newOffset);
@@ -43,13 +48,17 @@ const MoviePage = () => {
       <div className="flex mb-10">
         <div className="flex-1">
           <input
+            ref={focusInput}
             type="text"
             className="w-full p-4 bg-slate-800 text-white outline-none rounded-lg"
             placeholder="Type here to search..."
             onChange={handleFilterChange}
           />
         </div>
-        <button className="p-4 bg-primary text-white">
+        <button
+          onClick={() => focusInput.current.focus()}
+          className="p-4 bg-primary text-white"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -69,7 +78,7 @@ const MoviePage = () => {
       {loading && (
         <div className="w-10 h-10 rounded-full border-4 border-primary border-t-transparent border-t-4 mx-auto animate-spin"></div>
       )}
-      <div className="grid gap-10 movie-page mx-auto">
+      <div className="grid gap-3 movie-page mx-auto">
         {!loading &&
           movies.length > 0 &&
           movies.map((item) => (
