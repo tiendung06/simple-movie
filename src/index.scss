@@ -29,6 +29,11 @@
     width: 150px;
     height: auto;
   }
+  p {
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+  }
 }
 .pagination {
   display: flex;

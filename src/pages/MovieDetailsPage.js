@@ -12,41 +12,49 @@ const MovieDetailsPage = () => {
   const { backdrop_path, poster_path, title, genres, overview } = data;
 
   return (
-    <div className="pb-5">
-      <div className="w-full h-[600px] relative">
+    <div className="pb-5 page-container">
+      <div className="w-full h-[600px] relative mobile:h-screen">
         <div className="absolute inset-0 bg-black bg-opacity-70"></div>
         <div
-          className="w-full h-full bg-cover bg-no-repeat "
+          className="w-full h-full bg-cover bg-no-repeat flex items-center justify-center rounded-lg"
           style={{
-            backgroundImage: `url(${tmdbAPI.imageOriginal(backdrop_path)})`,
+            backgroundImage: `url(${
+              tmdbAPI.imageOriginal(backdrop_path) ||
+              tmdbAPI.imageOriginal(poster_path)
+            })`,
           }}
-        ></div>
-      </div>
-      <div className="w-full h-[300px] max-w-[800px] mx-auto -mt-[200px] relative z-10 pb-10">
-        <img
-          src={tmdbAPI.imageOriginal(poster_path)}
-          alt=""
-          className="w-full h-full object-cover rounded-xl"
-        />
-      </div>
-      <h1 className="text-center text-4xl font-bold text-white mb-10">
-        {title}
-      </h1>
-      {genres.length > 0 && (
-        <div className="flex items-center justify-center gap-x-5 mb-10 flex-wrap">
-          {genres.map((item) => (
-            <span
-              key={item.id}
-              className="py-2 px-4 mb-2 border-primary text-primary border rounded-md"
-            >
-              {item.name}
-            </span>
-          ))}
+        >
+          <div className="w-full h-[500px] mx-auto z-10 flex px-10 mobile:px-0">
+            <div className="max-w-[400px] mobile:max-w-[250px] mobile:mx-auto mobile:hidden">
+              <img
+                src={tmdbAPI.imageOriginal(poster_path)}
+                alt=""
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </div>
+            <div className="pl-10 py-10 mobile:p-5 w-full">
+              <h1 className="text-4xl mobile:text-3xl mobile:text-center font-bold text-white mb-10">
+                {title}
+              </h1>
+              {genres.length > 0 && (
+                <div className="flex items-center gap-x-5 mb-10 flex-wrap mobile:justify-center">
+                  {genres.map((item) => (
+                    <span
+                      key={item.id}
+                      className="py-2 px-4 mb-2 border-white text-white border rounded-md"
+                    >
+                      {item.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p className="leading-relaxed md:max-w-[800px] mobile:text-center text-ellipsis overflow-hidden">
+                {overview}
+              </p>
+            </div>
+          </div>
         </div>
-      )}
-      <p className="text-center leading-relaxed max-w-[600px] mx-auto mb-10">
-        {overview}
-      </p>
+      </div>
       <MovieMeta type="credits"></MovieMeta>
       <MovieMeta type="videos"></MovieMeta>
       <MovieMeta type="similar"></MovieMeta>
@@ -74,7 +82,7 @@ function MovieMeta({ type = "videos" }) {
                     alt=""
                     className="w-full h-[250px] object-cover rounded-lg mb-3"
                   />
-                  <h3 className="text-xl font-medium text-center">
+                  <h3 className="text-base font-medium text-center">
                     {item.name}
                   </h3>
                 </div>
@@ -123,7 +131,7 @@ function MovieMeta({ type = "videos" }) {
           <div className="movie-list">
             <Swiper
               grabCursor={"true"}
-              spaceBetween={40}
+              spaceBetween={12}
               slidesPerView={"auto"}
             >
               {results.length > 0 &&

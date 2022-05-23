@@ -50,14 +50,14 @@ const MoviePage = () => {
           <input
             ref={focusInput}
             type="text"
-            className="w-full p-4 bg-slate-800 text-white outline-none rounded-lg"
+            className="w-full p-4 bg-slate-800 text-white outline-none rounded-l-lg"
             placeholder="Type here to search..."
             onChange={handleFilterChange}
           />
         </div>
         <button
           onClick={() => focusInput.current.focus()}
-          className="p-4 bg-primary text-white"
+          className="p-4 bg-primary text-white rounded-r-lg"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
