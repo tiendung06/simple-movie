@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { tmdbAPI } from "../../config";
 import Button from "../button/Button";
 
-const MovieCard = ({ item }) => {
-  const { title, vote_average, release_date, backdrop_path, poster_path, id } =
+const TvCard = ({ item }) => {
+  const { name, vote_average, first_air_date, backdrop_path, poster_path, id } =
     item;
   const navigate = useNavigate();
 
   return (
     <div
       className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full"
-      onClick={() => navigate(`/movies/${id}`)}
+      onClick={() => navigate(`/tv/${id}`)}
     >
       <img
         src={
@@ -23,9 +23,9 @@ const MovieCard = ({ item }) => {
         className="w-full h-[250px] object-cover rounded-lg mb-5"
       />
       <div className="flex flex-col flex-1">
-        <h3 className="text-xl font-bold mb-3">{title}</h3>
+        <h3 className="text-xl font-bold mb-3">{name}</h3>
         <div className="flex items-center justify-between text-sm opacity-50 mb-5">
-          <span>{new Date(release_date).getFullYear()}</span>
+          <span>{new Date(first_air_date).getFullYear()}</span>
           <div className="flex items-center">
             <span>{vote_average}</span>
             <svg
@@ -39,9 +39,9 @@ const MovieCard = ({ item }) => {
           </div>
         </div>
       </div>
-      <Button onClick={() => navigate(`/movies/${id}`)}>Watch now</Button>
+      <Button onClick={() => navigate(`/tv/${id}`)}>Watch now</Button>
     </div>
   );
 };
 
-export default MovieCard;
+export default TvCard;

@@ -2,20 +2,20 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
-import MovieCard from "../components/movie/MovieCard";
+import TvCard from "../components/movie/TvCard";
 import { fetcher, tmdbAPI } from "../config";
 
-const MovieDetailsPage = () => {
-  const { movieId } = useParams();
-  const { data } = useSWR(tmdbAPI.getMovieDetails(movieId), fetcher);
+const TvDetailsPage = () => {
+  const { tvId } = useParams();
+  const { data } = useSWR(tmdbAPI.getTvDetails(tvId), fetcher);
   if (!data) return null;
   const {
     backdrop_path,
     poster_path,
-    title,
+    name,
     genres,
     overview,
-    release_date,
+    first_air_date,
     vote_average,
   } = data;
 
@@ -27,8 +27,9 @@ const MovieDetailsPage = () => {
           className="w-full h-full bg-cover bg-no-repeat flex items-center justify-center rounded-lg"
           style={{
             backgroundImage: `url(${
-              tmdbAPI.imageOriginal(backdrop_path) ||
-              tmdbAPI.imageOriginal(poster_path)
+              backdrop_path
+                ? tmdbAPI.imageOriginal(backdrop_path)
+                : tmdbAPI.imageOriginal(poster_path)
             })`,
           }}
         >
@@ -42,11 +43,11 @@ const MovieDetailsPage = () => {
             </div>
             <div className="pl-10 py-10 mobile:p-5 w-full">
               <h1 className="text-4xl mobile:text-3xl mobile:text-center font-bold text-white mb-5">
-                {title}
+                {name}
               </h1>
               <div className="flex items-center mb-5 mobile:justify-center">
                 <span className="mr-5">
-                  {new Date(release_date).getFullYear()}
+                  {new Date(first_air_date).getFullYear()}
                 </span>
                 <div className="flex items-center">
                   <span>{vote_average}</span>
@@ -79,16 +80,17 @@ const MovieDetailsPage = () => {
           </div>
         </div>
       </div>
-      <MovieMeta type="credits"></MovieMeta>
-      <MovieMeta type="videos"></MovieMeta>
-      <MovieMeta type="similar"></MovieMeta>
+
+      <TvMeta type="credits"></TvMeta>
+      <TvMeta type="videos"></TvMeta>
+      <TvMeta type="similar"></TvMeta>
     </div>
   );
 };
 
-function MovieMeta({ type = "videos" }) {
-  const { movieId } = useParams();
-  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, type), fetcher);
+function TvMeta({ type = "videos" }) {
+  const { tvId } = useParams();
+  const { data } = useSWR(tmdbAPI.getTvMeta(tvId, type), fetcher);
   if (!data) return null;
   if (type === "credits") {
     const { cast } = data;
@@ -161,7 +163,7 @@ function MovieMeta({ type = "videos" }) {
               {results.length > 0 &&
                 results.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <MovieCard item={item}></MovieCard>
+                    <TvCard item={item}></TvCard>
                   </SwiperSlide>
                 ))}
             </Swiper>
@@ -172,4 +174,4 @@ function MovieMeta({ type = "videos" }) {
   return null;
 }
 
-export default MovieDetailsPage;
+export default TvDetailsPage;

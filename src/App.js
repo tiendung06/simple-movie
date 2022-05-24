@@ -8,6 +8,8 @@ import Banner from "./components/banner/Banner";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviePage = lazy(() => import("./pages/MoviePage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
+const TvPage = lazy(() => import("./pages/TvPage"));
+const TvDetailsPage = lazy(() => import("./pages/TvDetailsPage"));
 
 function App() {
   return (
@@ -26,8 +28,13 @@ function App() {
             ></Route>
             <Route path="/movies" element={<MoviePage></MoviePage>}></Route>
             <Route
-              path="/movie/:movieId"
+              path="/movies/:movieId"
               element={<MovieDetailsPage></MovieDetailsPage>}
+            ></Route>
+            <Route path="/tv" element={<TvPage></TvPage>}></Route>
+            <Route
+              path="/tv/:tvId"
+              element={<TvDetailsPage></TvDetailsPage>}
             ></Route>
           </Route>
         </Routes>

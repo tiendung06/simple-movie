@@ -2,6 +2,8 @@ export const fetcher = (...args) => fetch(...args).then((res) => res.json());
 export const apiKey = "25eac7bfded2875800a2dcebaa8ab051";
 const tmdbEndpoint = "https://api.themoviedb.org/3/movie";
 const tmdbEndpointSearch = "https://api.themoviedb.org/3/search/movie";
+const tmdbTvEndpoint = "https://api.themoviedb.org/3/tv";
+const tmdbTvEndpointSearch = "https://api.themoviedb.org/3/search/tv";
 export const tmdbAPI = {
   getMovieList: (type, page = 1) =>
     `${tmdbEndpoint}/${type}?api_key=${apiKey}&page=${page}`,
@@ -10,6 +12,13 @@ export const tmdbAPI = {
     `${tmdbEndpoint}/${movieId}/${type}?api_key=${apiKey}`,
   getMovieSearch: (filter, page = 1) =>
     `${tmdbEndpointSearch}?api_key=${apiKey}&query=${filter}&page=${page}`,
+  getTvList: (type, page = 1) =>
+    `${tmdbTvEndpoint}/${type}?api_key=${apiKey}&page=${page}`,
+  getTvDetails: (tvId) => `${tmdbTvEndpoint}/${tvId}?api_key=${apiKey}`,
+  getTvMeta: (tvId, type) =>
+    `${tmdbTvEndpoint}/${tvId}/${type}?api_key=${apiKey}`,
+  getTvSearch: (filter, page = 1) =>
+    `${tmdbTvEndpointSearch}?api_key=${apiKey}&query=${filter}&page=${page}`,
   imageOriginal: (url) => `https://image.tmdb.org/t/p/original/${url}`,
   image500: (url) => `https://image.tmdb.org/t/p/w500/${url}`,
 };

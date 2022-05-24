@@ -7,7 +7,7 @@ const Header = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          isActive ? "text-primary" : "hover:opacity-75"
+          isActive ? "text-primary" : "hover:opacity-75 transition-opacity"
         }
       >
         Home
@@ -15,10 +15,18 @@ const Header = () => {
       <NavLink
         to="/movies"
         className={({ isActive }) =>
-          isActive ? "text-primary" : "hover:opacity-75"
+          isActive ? "text-primary" : "hover:opacity-75 transition-opacity"
         }
       >
         Movies
+      </NavLink>
+      <NavLink
+        to="/tv"
+        className={({ isActive }) =>
+          isActive ? "text-primary" : "hover:opacity-75 transition-opacity"
+        }
+      >
+        TV Series
       </NavLink>
     </header>
   );

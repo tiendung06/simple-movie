@@ -19,9 +19,10 @@ const Banner = () => {
         grabCursor="true"
         slidesPerView={"auto"}
         autoplay={{ delay: 5000 }}
+        spaceBetween={40}
       >
         {movies.length > 0 &&
-          movies.map((item) => (
+          movies.slice(0, 8).map((item) => (
             <SwiperSlide key={item.id}>
               <BannerItem item={item}></BannerItem>
             </SwiperSlide>
@@ -32,19 +33,22 @@ const Banner = () => {
 };
 
 function BannerItem({ item }) {
-  const { title, poster_path, id, vote_average, release_date } = item;
+  const { title, backdrop_path, id, vote_average, release_date } = item;
   const navigate = useNavigate();
   return (
     <div className="w-full h-full rounded-lg relative">
-      <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"></div>
+      <div
+        className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"
+        onClick={() => navigate(`/movies/${id}`)}
+      ></div>
       <img
-        src={tmdbAPI.imageOriginal(poster_path)}
+        src={tmdbAPI.imageOriginal(backdrop_path)}
         alt=""
         className="w-full h-full object-cover rounded-lg"
       />
       <div className="absolute left-5 bottom-5 w-full text-white">
         <h2 className="font-bold text-3xl">{title}</h2>
-        <div className="flex items-center gap-x-10 mb-3">
+        <div className="flex items-center gap-x-5 mb-3">
           <span className="py-2">{new Date(release_date).getFullYear()}</span>
           <div className="flex items-center">
             <span className="py-2">{vote_average}</span>
@@ -58,7 +62,7 @@ function BannerItem({ item }) {
             </svg>
           </div>
         </div>
-        <Button onClick={() => navigate(`/movie/${id}`)} className="w-auto">
+        <Button onClick={() => navigate(`/movies/${id}`)} className="w-auto">
           Watch now
         </Button>
       </div>
