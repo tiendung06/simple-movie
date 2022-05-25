@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useSWR from "swr";
-import MovieCard from "../components/movie/MovieCard";
+import Card from "../components/card/Card";
 import { fetcher, tmdbAPI } from "../config";
 import useDebounce from "../hooks/useDebounce";
 
 const itemsPerPage = 20;
-const MoviePage = () => {
+const Page = ({ meta }) => {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   const [filter, setFilter] = useState("");
-  const [url, setUrl] = useState(tmdbAPI.getMovieList("popular", nextPage));
+  const [url, setUrl] = useState(tmdbAPI.getList(meta, "popular", nextPage));
   const filterDebounce = useDebounce(filter);
   const focusInput = useRef();
   const handleFilterChange = (e) => {
@@ -21,11 +21,11 @@ const MoviePage = () => {
   const loading = !data && !error;
   useEffect(() => {
     if (filterDebounce) {
-      setUrl(tmdbAPI.getMovieSearch(filterDebounce, nextPage));
+      setUrl(tmdbAPI.getSearch(meta, filterDebounce, nextPage));
     } else {
-      setUrl(tmdbAPI.getMovieList("popular", nextPage));
+      setUrl(tmdbAPI.getList(meta, "popular", nextPage));
     }
-  }, [filterDebounce, nextPage]);
+  }, [filterDebounce, meta, nextPage]);
 
   const movies = data?.results || [];
   useEffect(() => {
@@ -82,7 +82,7 @@ const MoviePage = () => {
         {!loading &&
           movies.length > 0 &&
           movies.map((item) => (
-            <MovieCard key={item.id} item={item}></MovieCard>
+            <Card key={item.id} item={item} meta={meta}></Card>
           ))}
       </div>
       <div className="mt-10 pb-10 w-full select-none">
@@ -101,4 +101,4 @@ const MoviePage = () => {
   );
 };
 
-export default MoviePage;
+export default Page;

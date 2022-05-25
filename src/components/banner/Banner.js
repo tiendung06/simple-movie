@@ -8,8 +8,7 @@ import "swiper/scss/autoplay";
 import { Autoplay } from "swiper";
 
 const Banner = () => {
-  const { data } = useSWR(tmdbAPI.getMovieList("upcoming"), fetcher);
-
+  const { data } = useSWR(tmdbAPI.getList("movie", "upcoming"), fetcher);
   const movies = data?.results || [];
 
   return (
@@ -36,11 +35,11 @@ function BannerItem({ item }) {
   const { title, backdrop_path, id, vote_average, release_date } = item;
   const navigate = useNavigate();
   return (
-    <div className="w-full h-full rounded-lg relative">
-      <div
-        className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"
-        onClick={() => navigate(`/movies/${id}`)}
-      ></div>
+    <div
+      className="w-full h-full rounded-lg relative"
+      onClick={() => navigate(`/movie/${id}`)}
+    >
+      <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"></div>
       <img
         src={tmdbAPI.imageOriginal(backdrop_path)}
         alt=""
@@ -62,9 +61,7 @@ function BannerItem({ item }) {
             </svg>
           </div>
         </div>
-        <Button onClick={() => navigate(`/movies/${id}`)} className="w-auto">
-          Watch now
-        </Button>
+        <Button className="w-auto">Watch now</Button>
       </div>
     </div>
   );

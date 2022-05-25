@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import MovieList from "../components/movie/MovieList";
-import TvList from "../components/movie/TvList";
+import List from "../components/movie/List";
 
 const HomePage = () => {
   return (
@@ -9,25 +8,25 @@ const HomePage = () => {
         <h2 className="capitalize text-white mb-10 text-3xl font-bold">
           Now playing
         </h2>
-        <MovieList></MovieList>
+        <List meta="movie" type="now_playing"></List>
       </section>
       <section className="movies-layout page-container pb-20">
         <h2 className="capitalize text-white mb-10 text-3xl font-bold">
           Top rated
         </h2>
-        <MovieList type="top_rated"></MovieList>
+        <List meta="movie" type="top_rated"></List>
       </section>
       <section className="movies-layout page-container pb-20">
         <h2 className="capitalize text-white mb-10 text-3xl font-bold">
           Trending
         </h2>
-        <MovieList type="popular"></MovieList>
+        <List meta="movie" type="popular"></List>
       </section>
       <section className="movies-layout page-container pb-20">
         <h2 className="capitalize text-white mb-10 text-3xl font-bold">
           TV on the air
         </h2>
-        <TvList type="on_the_air"></TvList>
+        <List meta="tv" type="on_the_air"></List>
       </section>
     </Fragment>
   );

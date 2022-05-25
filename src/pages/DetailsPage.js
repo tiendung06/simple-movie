@@ -2,20 +2,22 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
-import TvCard from "../components/movie/TvCard";
+import Card from "../components/card/Card";
 import { fetcher, tmdbAPI } from "../config";
 
-const TvDetailsPage = () => {
-  const { tvId } = useParams();
-  const { data } = useSWR(tmdbAPI.getTvDetails(tvId), fetcher);
+const DetailsPage = ({ meta = "movie" }) => {
+  const { id } = useParams();
+  const { data } = useSWR(tmdbAPI.getDetails(meta, id), fetcher);
   if (!data) return null;
   const {
     backdrop_path,
     poster_path,
     name,
+    title,
     genres,
     overview,
     first_air_date,
+    release_date,
     vote_average,
   } = data;
 
@@ -43,11 +45,11 @@ const TvDetailsPage = () => {
             </div>
             <div className="pl-10 py-10 mobile:p-5 w-full">
               <h1 className="text-4xl mobile:text-3xl mobile:text-center font-bold text-white mb-5">
-                {name}
+                {name || title}
               </h1>
               <div className="flex items-center mb-5 mobile:justify-center">
                 <span className="mr-5">
-                  {new Date(first_air_date).getFullYear()}
+                  {new Date(first_air_date || release_date).getFullYear()}
                 </span>
                 <div className="flex items-center">
                   <span>{vote_average}</span>
@@ -80,17 +82,16 @@ const TvDetailsPage = () => {
           </div>
         </div>
       </div>
-
-      <TvMeta type="credits"></TvMeta>
-      <TvMeta type="videos"></TvMeta>
-      <TvMeta type="similar"></TvMeta>
+      <Meta meta={meta} type="credits"></Meta>
+      <Meta meta={meta} type="videos"></Meta>
+      <Meta meta={meta} type="similar"></Meta>
     </div>
   );
 };
 
-function TvMeta({ type = "videos" }) {
-  const { tvId } = useParams();
-  const { data } = useSWR(tmdbAPI.getTvMeta(tvId, type), fetcher);
+function Meta({ meta, type = "videos" }) {
+  const { id } = useParams();
+  const { data } = useSWR(tmdbAPI.getMeta(meta, type, id), fetcher);
   if (!data) return null;
   if (type === "credits") {
     const { cast } = data;
@@ -105,7 +106,7 @@ function TvMeta({ type = "videos" }) {
                 <div className="cast-item">
                   <img
                     src={tmdbAPI.imageOriginal(item.profile_path)}
-                    alt=""
+                    alt={item.name}
                     className="w-full h-[250px] object-cover rounded-lg mb-3"
                   />
                   <h3 className="text-base font-medium text-center">
@@ -163,7 +164,7 @@ function TvMeta({ type = "videos" }) {
               {results.length > 0 &&
                 results.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <TvCard item={item}></TvCard>
+                    <Card item={item} meta={meta}></Card>
                   </SwiperSlide>
                 ))}
             </Swiper>
@@ -174,4 +175,4 @@ function TvMeta({ type = "videos" }) {
   return null;
 }
 
-export default TvDetailsPage;
+export default DetailsPage;

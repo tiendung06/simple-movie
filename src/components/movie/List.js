@@ -1,20 +1,20 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import MovieCard from "./MovieCard";
 import useSWR from "swr";
 import { fetcher, tmdbAPI } from "../../config";
+import Card from "../card/Card";
 
-const MovieList = ({ type = "now_playing" }) => {
-  const { data } = useSWR(tmdbAPI.getMovieList(type), fetcher);
-  const movies = data?.results || [];
+const List = ({ meta, type }) => {
+  const { data } = useSWR(tmdbAPI.getList(meta, type), fetcher);
+  const tv = data?.results || [];
 
   return (
     <div className="movie-list">
       <Swiper grabCursor={"true"} spaceBetween={12} slidesPerView={"auto"}>
-        {movies.length > 0 &&
-          movies.map((item) => (
+        {tv.length > 0 &&
+          tv.map((item) => (
             <SwiperSlide key={item.id}>
-              <MovieCard item={item}></MovieCard>
+              <Card item={item} meta={meta}></Card>
             </SwiperSlide>
           ))}
       </Swiper>
@@ -22,4 +22,4 @@ const MovieList = ({ type = "now_playing" }) => {
   );
 };
 
-export default MovieList;
+export default List;

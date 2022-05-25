@@ -6,10 +6,8 @@ import Main from "./components/layout/Main";
 import Banner from "./components/banner/Banner";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
-const MoviePage = lazy(() => import("./pages/MoviePage"));
-const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
-const TvPage = lazy(() => import("./pages/TvPage"));
-const TvDetailsPage = lazy(() => import("./pages/TvDetailsPage"));
+const Page = lazy(() => import("./pages/Page"));
+const DetailsPage = lazy(() => import("./pages/DetailsPage"));
 
 function App() {
   return (
@@ -26,15 +24,15 @@ function App() {
                 </>
               }
             ></Route>
-            <Route path="/movies" element={<MoviePage></MoviePage>}></Route>
+            <Route path="/movie" element={<Page meta="movie"></Page>}></Route>
             <Route
-              path="/movies/:movieId"
-              element={<MovieDetailsPage></MovieDetailsPage>}
+              path="/movie/:id"
+              element={<DetailsPage meta="movie"></DetailsPage>}
             ></Route>
-            <Route path="/tv" element={<TvPage></TvPage>}></Route>
+            <Route path="/tv" element={<Page meta="tv"></Page>}></Route>
             <Route
-              path="/tv/:tvId"
-              element={<TvDetailsPage></TvDetailsPage>}
+              path="/tv/:id"
+              element={<DetailsPage meta="tv"></DetailsPage>}
             ></Route>
           </Route>
         </Routes>
