@@ -14,3 +14,6 @@ export const tmdbAPI = {
   imageOriginal: (url) => `https://image.tmdb.org/t/p/original/${url}`,
   image500: (url) => `https://image.tmdb.org/t/p/w500/${url}`,
 };
+export const TabTitle = (newTitle) => {
+  return (document.title = newTitle);
+};

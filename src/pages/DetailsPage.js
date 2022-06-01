@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import Card from "../components/card/Card";
-import { fetcher, tmdbAPI } from "../config";
+import { fetcher, TabTitle, tmdbAPI } from "../config";
 
 const DetailsPage = ({ meta = "movie" }) => {
   const { id } = useParams();
@@ -20,6 +20,8 @@ const DetailsPage = ({ meta = "movie" }) => {
     release_date,
     vote_average,
   } = data;
+
+  TabTitle(`${title || name}`);
 
   return (
     <div className="pb-5 page-container">

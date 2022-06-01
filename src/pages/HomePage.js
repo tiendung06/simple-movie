@@ -1,7 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import List from "../components/movie/List";
+import { TabTitle } from "../config";
 
 const HomePage = () => {
+  useEffect(() => {
+    TabTitle("Home");
+  }, []);
+
   return (
     <Fragment>
       <section className="movies-layout page-container pb-20">

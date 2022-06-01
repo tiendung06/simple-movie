@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useSWR from "swr";
 import Card from "../components/card/Card";
-import { fetcher, tmdbAPI } from "../config";
+import { fetcher, TabTitle, tmdbAPI } from "../config";
 import useDebounce from "../hooks/useDebounce";
 
 const itemsPerPage = 20;
@@ -36,6 +36,14 @@ const Page = ({ meta }) => {
   useEffect(() => {
     if (focusInput.current) focusInput.current.focus();
   }, []);
+
+  useEffect(() => {
+    if (meta === "movie") {
+      TabTitle("Movies");
+    } else {
+      TabTitle("TV Series");
+    }
+  }, [meta]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % data.total_results;
