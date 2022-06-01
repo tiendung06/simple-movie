@@ -18,7 +18,7 @@ const Card = ({ item, meta }) => {
 
   return (
     <div
-      className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full"
+      className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full min-h-[450px]"
       onClick={() => navigate(`/${meta}/${id}`)}
     >
       <img
@@ -30,7 +30,7 @@ const Card = ({ item, meta }) => {
         alt={name || title}
         className="w-full h-[250px] object-cover rounded-lg mb-5"
       />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 justify-between">
         <h3 className="text-xl font-bold mb-3">{name || title}</h3>
         <div className="flex items-center justify-between text-sm opacity-50 mb-5">
           <span>{new Date(first_air_date || release_date).getFullYear()}</span>

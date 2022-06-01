@@ -4,6 +4,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import Card from "../components/card/Card";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
+import "swiper/scss/autoplay";
+import { Autoplay } from "swiper";
 
 const DetailsPage = ({ meta = "movie" }) => {
   const { id } = useParams();
@@ -70,7 +72,7 @@ const DetailsPage = ({ meta = "movie" }) => {
                   {genres.map((item) => (
                     <span
                       key={item.id}
-                      className="py-2 px-4 mb-2 border-white text-white border rounded-md hover:text-primary hover:border-primary"
+                      className="py-2 px-4 mb-2 border-white text-white border rounded-md hover:text-primary hover:border-primary transition-all"
                     >
                       {item.name}
                     </span>
@@ -103,7 +105,7 @@ function Meta({ meta, type = "videos" }) {
         <h2 className="text-center text-3xl mb-10 font-medium">Cast</h2>
         <div className="character-list">
           <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-            {cast.slice(0, 12).map((item) => (
+            {cast.slice(0, 20).map((item) => (
               <SwiperSlide key={item.id}>
                 <div className="cast-item">
                   <img
@@ -159,9 +161,11 @@ function Meta({ meta, type = "videos" }) {
           <h2 className="text-3xl font-medium mb-10">Similar movies</h2>
           <div className="movie-list">
             <Swiper
+              modules={[Autoplay]}
               grabCursor={"true"}
               spaceBetween={12}
               slidesPerView={"auto"}
+              autoplay={{ delay: 5000 }}
             >
               {results.length > 0 &&
                 results.map((item) => (

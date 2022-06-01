@@ -44,3 +44,16 @@
     @apply text-primary;
   }
 }
+
+.swiper-scrollbar-drag {
+  background: #ffffff !important;
+  opacity: 0.3 !important;
+}
+
+.swiper-scrollbar {
+  background: #1e293b !important;
+}
+
+.swiper-horizontal > .swiper-scrollbar {
+  height: 8px !important;
+}

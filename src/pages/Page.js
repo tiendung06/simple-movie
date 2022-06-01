@@ -34,10 +34,6 @@ const Page = ({ meta }) => {
   }, [data, itemOffset]);
 
   useEffect(() => {
-    if (focusInput.current) focusInput.current.focus();
-  }, []);
-
-  useEffect(() => {
     if (meta === "movie") {
       TabTitle("Movies");
     } else {
