@@ -4,7 +4,7 @@ import { tmdbAPI } from "../../config";
 import Button from "../button/Button";
 import backdrop from "../../images/backdrop.png";
 
-const Card = ({ item, meta }) => {
+const Card = ({ item, meta, movieTitle }) => {
   const {
     name,
     title,
@@ -34,11 +34,13 @@ const Card = ({ item, meta }) => {
       className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full min-h-[450px] cursor-pointer"
       onClick={() => navigate(`/${meta}/${id}`)}
     >
-      <img
-        src={imgBackdrop()}
-        alt={name || title}
-        className="w-full h-[250px] object-cover rounded-lg mb-5"
-      />
+      <div className="w-full h-[250px] mb-5 image overflow-hidden">
+        <img
+          src={imgBackdrop()}
+          alt={name || title}
+          className="w-full h-full object-cover rounded-lg mb-5 transition-all"
+        />
+      </div>
       <div className="flex flex-col flex-1 justify-between">
         <h3 className="text-xl font-bold mb-3">{name || title}</h3>
         <div className="flex items-center justify-between text-sm opacity-50 mb-5">
