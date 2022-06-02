@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { tmdbAPI } from "../../config";
 import Button from "../button/Button";
+import backdrop from "../../images/backdrop.png";
 
 const Card = ({ item, meta }) => {
   const {
@@ -16,17 +17,25 @@ const Card = ({ item, meta }) => {
   } = item;
   const navigate = useNavigate();
 
+  const imgBackdrop = () => {
+    if (backdrop_path === null) {
+      if (poster_path === null) {
+        return backdrop;
+      } else {
+        return tmdbAPI.image500(poster_path);
+      }
+    } else {
+      return tmdbAPI.image500(backdrop_path);
+    }
+  };
+
   return (
     <div
       className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full min-h-[450px]"
       onClick={() => navigate(`/${meta}/${id}`)}
     >
       <img
-        src={
-          backdrop_path
-            ? tmdbAPI.image500(backdrop_path)
-            : tmdbAPI.image500(poster_path)
-        }
+        src={imgBackdrop()}
         alt={name || title}
         className="w-full h-[250px] object-cover rounded-lg mb-5"
       />

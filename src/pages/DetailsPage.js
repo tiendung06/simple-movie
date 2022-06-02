@@ -6,6 +6,8 @@ import Card from "../components/card/Card";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
 import "swiper/scss/autoplay";
 import { Autoplay } from "swiper";
+import castImg from "../images/cast.png";
+import unknowPoster from "../images/unknow_poster.png";
 
 const DetailsPage = ({ meta = "movie" }) => {
   const { id } = useParams();
@@ -42,7 +44,11 @@ const DetailsPage = ({ meta = "movie" }) => {
           <div className="w-full h-[500px] mx-auto z-10 flex px-10 mobile:px-0">
             <div className="max-w-[400px] mobile:max-w-[250px] mobile:mx-auto mobile:hidden">
               <img
-                src={tmdbAPI.imageOriginal(poster_path)}
+                src={
+                  poster_path
+                    ? tmdbAPI.imageOriginal(poster_path)
+                    : unknowPoster
+                }
                 alt=""
                 className="w-full h-full object-cover rounded-lg"
               />
@@ -109,7 +115,11 @@ function Meta({ meta, type = "videos" }) {
               <SwiperSlide key={item.id}>
                 <div className="cast-item">
                   <img
-                    src={tmdbAPI.imageOriginal(item.profile_path)}
+                    src={
+                      item.profile_path
+                        ? tmdbAPI.imageOriginal(item.profile_path)
+                        : castImg
+                    }
                     alt={item.name}
                     className="w-full h-[250px] object-cover rounded-lg mb-3"
                   />
