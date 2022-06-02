@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useSWR from "swr";
 import Card from "../components/card/Card";
@@ -85,7 +85,7 @@ const DetailsPage = ({ meta = "movie" }) => {
                   ))}
                 </div>
               )}
-              <p className="leading-relaxed md:max-w-[800px] mobile:text-center text-ellipsis overflow-hidden">
+              <p className="leading-relaxed md:max-w-[800px] mobile:text-center text-ellipsis overflow-hidden overview">
                 {overview}
               </p>
             </div>
@@ -100,6 +100,7 @@ const DetailsPage = ({ meta = "movie" }) => {
 };
 
 function Meta({ meta, type = "videos" }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data } = useSWR(tmdbAPI.getMeta(meta, type, id), fetcher);
   if (!data) return null;
@@ -113,7 +114,10 @@ function Meta({ meta, type = "videos" }) {
           <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
             {cast.slice(0, 20).map((item) => (
               <SwiperSlide key={item.id}>
-                <div className="cast-item">
+                <div
+                  className="cast-item cursor-pointer"
+                  onClick={() => navigate(`/person/${item.id}`)}
+                >
                   <img
                     src={
                       item.profile_path

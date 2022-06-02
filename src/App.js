@@ -4,6 +4,7 @@ import "swiper/scss";
 import { Route, Routes } from "react-router-dom";
 import Main from "./components/layout/Main";
 import Banner from "./components/banner/Banner";
+import PersonPage from "./pages/PersonPage";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const Page = lazy(() => import("./pages/Page"));
@@ -33,6 +34,10 @@ function App() {
             <Route
               path="/tv/:id"
               element={<DetailsPage meta="tv"></DetailsPage>}
+            ></Route>
+            <Route
+              path="/person/:id"
+              element={<PersonPage></PersonPage>}
             ></Route>
           </Route>
         </Routes>

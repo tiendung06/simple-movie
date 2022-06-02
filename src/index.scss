@@ -29,7 +29,7 @@
     width: 150px;
     height: auto;
   }
-  p {
+  .overview {
     display: -webkit-box;
     -webkit-line-clamp: 9;
     -webkit-box-orient: vertical;
@@ -56,4 +56,10 @@
 
 .swiper-horizontal > .swiper-scrollbar {
   height: 8px !important;
+}
+
+.overview-person {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }

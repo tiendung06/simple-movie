@@ -13,6 +13,9 @@ export const tmdbAPI = {
     `${tmdbEndpointSearch}/${meta}?api_key=${apiKey}&query=${filter}&page=${page}`,
   imageOriginal: (url) => `https://image.tmdb.org/t/p/original/${url}`,
   image500: (url) => `https://image.tmdb.org/t/p/w500/${url}`,
+  getPerson: (id) => `${tmdbEndpoint}/person/${id}?api_key=${apiKey}`,
+  getPersonMovies: (id) =>
+    `${tmdbEndpoint}/person/${id}/movie_credits?api_key=${apiKey}`,
 };
 export const TabTitle = (newTitle) => {
   return (document.title = newTitle);

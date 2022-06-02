@@ -31,7 +31,7 @@ const Card = ({ item, meta }) => {
 
   return (
     <div
-      className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full min-h-[450px]"
+      className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full min-h-[450px] cursor-pointer"
       onClick={() => navigate(`/${meta}/${id}`)}
     >
       <img
@@ -42,7 +42,9 @@ const Card = ({ item, meta }) => {
       <div className="flex flex-col flex-1 justify-between">
         <h3 className="text-xl font-bold mb-3">{name || title}</h3>
         <div className="flex items-center justify-between text-sm opacity-50 mb-5">
-          <span>{new Date(first_air_date || release_date).getFullYear()}</span>
+          <span>
+            {new Date(first_air_date || release_date).getFullYear() || "Unknow"}
+          </span>
           <div className="flex items-center">
             <span>{vote_average}</span>
             <svg

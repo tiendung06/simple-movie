@@ -48,7 +48,9 @@ function BannerItem({ item }) {
       <div className="absolute left-5 bottom-5 w-full text-white">
         <h2 className="font-bold text-3xl">{title}</h2>
         <div className="flex items-center gap-x-5 mb-3">
-          <span className="py-2">{new Date(release_date).getFullYear()}</span>
+          <span className="py-2">
+            {new Date(release_date).getFullYear() || "Unknow"}
+          </span>
           <div className="flex items-center">
             <span className="py-2">{vote_average}</span>
             <svg
