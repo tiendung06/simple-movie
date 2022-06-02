@@ -59,7 +59,8 @@ const DetailsPage = ({ meta = "movie" }) => {
               </h1>
               <div className="flex items-center mb-5 mobile:justify-center">
                 <span className="mr-5">
-                  {new Date(first_air_date || release_date).getFullYear()}
+                  {new Date(first_air_date || release_date).getFullYear() ||
+                    "Unknow"}
                 </span>
                 <div className="flex items-center">
                   <span>{vote_average}</span>

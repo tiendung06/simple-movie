@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
 import backdrop from "../images/backdrop.png";
+import cast from "../images/cast.png";
 
 const PersonPage = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const PersonPage = () => {
         <div className="flex w-full mobile:flex-col">
           <div className="w-[400px] mobile:w-full">
             <img
-              src={tmdbAPI.imageOriginal(profile_path)}
+              src={profile_path ? tmdbAPI.imageOriginal(profile_path) : cast}
               alt=""
               className="w-full h-full max-h-[500px] object-cover rounded-lg"
             />
@@ -34,10 +35,12 @@ const PersonPage = () => {
               <h1 className="text-4xl mobile:text-3xl mobile:text-center font-bold text-white mb-5">
                 {name}
               </h1>
-              <p className="mb-5">Birthday: {birthday}</p>
+              <p className="mb-5">Birthday: {birthday || "Unknow"}</p>
               {deathday && <p className="mb-5">Deathday: {deathday}</p>}
-              <p className="mb-5">Place of birth: {place_of_birth}</p>
-              <p className="mb-5">Popularity: {popularity}</p>
+              <p className="mb-5">
+                Place of birth: {place_of_birth || "Unknow"}
+              </p>
+              <p className="mb-5">Popularity: {popularity || "Unknow"}</p>
               <div className="">
                 <p className="mb-5">{biography}</p>
               </div>
