@@ -72,7 +72,7 @@ function MovieCredit() {
     <>
       {crew && (
         <div className="py-5">
-          <h1 className="text-3xl mobile:text-2xl mobile:text-center font-bold text-white mb-5">
+          <h1 className="text-3xl mobile:text-2xl mobile:text-center font-bold text-white mb-5 no-select">
             Lasted movie
           </h1>
           {crew.slice(0, 5).map((item) => (

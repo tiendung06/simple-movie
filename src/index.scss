@@ -4,7 +4,10 @@
 @layer base {
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
   body {
-    @apply bg-slate-900 font-body px-5 text-white select-none;
+    @apply bg-slate-900 font-body px-5 text-white;
+  }
+  img {
+    @apply select-none;
   }
 }
 @layer components {
@@ -62,4 +65,8 @@
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+}
+
+.no-select {
+  user-select: none;
 }

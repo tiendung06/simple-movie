@@ -78,7 +78,7 @@ const DetailsPage = ({ meta = "movie" }) => {
                   {genres.map((item) => (
                     <span
                       key={item.id}
-                      className="py-2 px-4 mb-2 border-white text-white border rounded-md hover:text-primary hover:border-primary transition-all"
+                      className="py-2 px-4 mb-2 border-white text-white border rounded-md hover:text-primary hover:border-primary transition-all cursor-pointer"
                     >
                       {item.name}
                     </span>
@@ -109,7 +109,9 @@ function Meta({ meta, type = "videos" }) {
     if (!cast || cast.length <= 0) return null;
     return (
       <div className="py-10">
-        <h2 className="text-center text-3xl mb-10 font-medium">Cast</h2>
+        <h2 className="text-center text-3xl mb-10 font-medium no-select">
+          Cast
+        </h2>
         <div className="character-list">
           <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
             {cast.slice(0, 20).map((item) => (
@@ -172,7 +174,9 @@ function Meta({ meta, type = "videos" }) {
     if (type === "similar")
       return (
         <div className="py-10">
-          <h2 className="text-3xl font-medium mb-10">Similar movies</h2>
+          <h2 className="text-3xl font-medium mb-10 no-select">
+            Similar movies
+          </h2>
           <div className="movie-list">
             <Swiper
               modules={[Autoplay]}
