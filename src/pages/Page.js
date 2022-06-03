@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ReactPaginate from "react-paginate";
 import useSWR from "swr";
 import Card from "../components/card/Card";
+import Footer from "../components/layout/Footer";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
 import useDebounce from "../hooks/useDebounce";
 
@@ -101,6 +102,7 @@ const Page = ({ meta }) => {
           className="pagination"
         />
       </div>
+      <Footer></Footer>
     </div>
   );
 };

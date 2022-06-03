@@ -5,9 +5,11 @@ import useSWR from "swr";
 import Card from "../components/card/Card";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
 import "swiper/scss/autoplay";
-import { Autoplay } from "swiper";
+import { Autoplay, Scrollbar } from "swiper";
 import castImg from "../images/cast.png";
 import unknowPoster from "../images/unknow_poster.png";
+import Footer from "../components/layout/Footer";
+import "swiper/css/scrollbar";
 
 const DetailsPage = ({ meta = "movie" }) => {
   const { id } = useParams();
@@ -28,7 +30,7 @@ const DetailsPage = ({ meta = "movie" }) => {
   TabTitle(`${title || name}`);
 
   return (
-    <div className="pb-5 page-container">
+    <div className="page-container">
       <div className="w-full h-[600px] relative mobile:h-screen">
         <div className="absolute inset-0 bg-black bg-opacity-70"></div>
         <div
@@ -96,6 +98,7 @@ const DetailsPage = ({ meta = "movie" }) => {
       <Meta meta={meta} type="credits"></Meta>
       <Meta meta={meta} type="videos"></Meta>
       <Meta meta={meta} type="similar"></Meta>
+      <Footer></Footer>
     </div>
   );
 };
@@ -174,22 +177,25 @@ function Meta({ meta, type = "videos" }) {
       );
     if (type === "similar")
       return (
-        <div className="py-10">
+        <div className="pt-10 pb-20">
           <h2 className="text-3xl font-medium mb-10 no-select">
             Similar movies
           </h2>
           <div className="movie-list">
             <Swiper
-              modules={[Autoplay]}
+              modules={[Autoplay, Scrollbar]}
               grabCursor={"true"}
               spaceBetween={12}
               slidesPerView={"auto"}
               autoplay={{ delay: 5000 }}
+              scrollbar={{ draggable: true }}
             >
               {results.length > 0 &&
                 results.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <Card item={item} meta={meta}></Card>
+                    <div className="pb-[30px]">
+                      <Card item={item} meta={meta}></Card>
+                    </div>
                   </SwiperSlide>
                 ))}
             </Swiper>

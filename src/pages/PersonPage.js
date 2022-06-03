@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
+import Footer from "../components/layout/Footer";
 import { fetcher, TabTitle, tmdbAPI } from "../config";
 import backdrop from "../images/backdrop.png";
 import cast from "../images/cast.png";
@@ -22,7 +23,7 @@ const PersonPage = () => {
   return (
     <div>
       <div className="page-container">
-        <div className="flex w-full mobile:flex-col">
+        <div className="flex w-full mobile:flex-col pb-20">
           <div className="w-[400px] mobile:w-full">
             <img
               src={profile_path ? tmdbAPI.imageOriginal(profile_path) : cast}
@@ -30,7 +31,7 @@ const PersonPage = () => {
               className="w-full h-full max-h-[500px] object-cover rounded-lg"
             />
           </div>
-          <div className="px-10 py-10 mobile:px-0 w-full">
+          <div className="px-10 pt-10 mobile:px-0 w-full">
             <div className="">
               <h1 className="text-4xl mobile:text-3xl mobile:text-center font-bold text-white mb-5">
                 {name}
@@ -48,6 +49,7 @@ const PersonPage = () => {
             <MovieCredit></MovieCredit>
           </div>
         </div>
+        <Footer></Footer>
       </div>
     </div>
   );

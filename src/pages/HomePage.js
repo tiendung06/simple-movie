@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from "react";
+import Footer from "../components/layout/Footer";
 import List from "../components/movie/List";
 import { TabTitle } from "../config";
 
@@ -32,6 +33,9 @@ const HomePage = () => {
           TV on the air
         </h2>
         <List meta="tv" type="on_the_air"></List>
+      </section>
+      <section className="page-container">
+        <Footer></Footer>
       </section>
     </Fragment>
   );
