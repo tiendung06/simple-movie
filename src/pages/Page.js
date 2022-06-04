@@ -42,6 +42,10 @@ const Page = ({ meta }) => {
     }
   }, [meta]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [nextPage]);
+
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % data.total_results;
     setItemOffset(newOffset);

@@ -2,10 +2,11 @@ import React from "react";
 
 const Button = ({
   onClick,
-  className,
+  className = "",
   children,
   type = "button",
   bgColor = "primary",
+  ...props
 }) => {
   let bgClassName = "bg-primary";
   switch (bgColor) {
@@ -23,6 +24,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       className={`py-3 px-6 rounded-lg capitalize ${bgClassName} w-full mt-auto ${className} hover:opacity-75 transition-opacity select-none`}
+      {...props}
     >
       {children}
     </button>

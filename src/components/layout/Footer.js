@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const movie = [
-  { name: "Latest", link: "lastest" },
   { name: "Now Playing", link: "now_playing" },
   { name: "Popular", link: "popular" },
   { name: "Top Rated", link: "top_rated" },
@@ -10,7 +9,6 @@ const movie = [
 ];
 
 const tv = [
-  { name: "Latest", link: "lastest" },
   { name: "TV Airing Today", link: "airing_today" },
   { name: "TV On The Air", link: "on_the_air" },
   { name: "Popular", link: "popular" },
@@ -49,13 +47,13 @@ function FooterColumn({ title, col, meta }) {
         {title}
       </h3>
       <ul className="list-none">
-        {col.map((item, index) => (
+        {col.map(({ name, link }) => (
           <li
-            key={index}
+            key={name}
             className="mb-[10px] hover:text-primary transition-all text-inherit leading-[1.875] cursor-pointer"
-            onClick={() => navigate(`/${meta}/${item.link}`)}
+            onClick={() => navigate(`/${meta}/${link}`)}
           >
-            {item.name}
+            {name}
           </li>
         ))}
       </ul>
